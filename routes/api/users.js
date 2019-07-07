@@ -6,7 +6,6 @@ const Users = mongoose.model('Users');
 
 //POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
-  console.log(req)
   const { body: { user } } = req;
 
   if(!user.email) {
@@ -24,6 +23,14 @@ router.post('/', auth.optional, (req, res, next) => {
       },
     });
   }
+
+  Users.findOne({ email: user.email }, (err, user) => {
+    return res.status(422).json({
+      errors: {
+        email: 'is already in use',
+      },
+    });
+  });
 
   const finalUser = new Users(user);
 
