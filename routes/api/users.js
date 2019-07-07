@@ -4,8 +4,7 @@ const router = require('express').Router()
 const auth = require('../auth')
 const Users = mongoose.model('Users')
 
-// POST new user route (optional, everyone has access)
-router.post('/', auth.optional, (req, res, next) => {
+router.post('/', auth.optional, async (req, res, next) => {
   const { body: { user } } = req
 
   if (!user.email) {
@@ -24,13 +23,14 @@ router.post('/', auth.optional, (req, res, next) => {
     })
   }
 
-  Users.findOne({ email: user.email }, (_, user) => {
+  const emailTaken = await Users.findOne({ email: user.email })
+  if (emailTaken) {
     return res.status(422).json({
       errors: {
         email: 'is already in use'
       }
     })
-  })
+  }
 
   const finalUser = new Users(user)
 
@@ -40,7 +40,6 @@ router.post('/', auth.optional, (req, res, next) => {
     .then(() => res.json({ user: finalUser.toAuthJSON() }))
 })
 
-// POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
   const { body: { user } } = req
 
@@ -76,7 +75,6 @@ router.post('/login', auth.optional, (req, res, next) => {
   })(req, res, next)
 })
 
-// GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
   const { payload: { id } } = req
 
