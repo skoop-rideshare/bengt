@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon app.js",
-    "test": "standard",
-    "fix": "standard --fix"
+    "test": "standard --fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

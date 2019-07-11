@@ -4,6 +4,7 @@ const router = require('express').Router()
 const auth = require('../auth')
 const Users = mongoose.model('Users')
 
+// @params: body { user: { email: 'example@test.se', password: 'test' }}
 router.post('/', auth.optional, async (req, res, next) => {
   const { body: { user } } = req
 
@@ -40,6 +41,7 @@ router.post('/', auth.optional, async (req, res, next) => {
     .then(() => res.json({ user: finalUser.toAuthJSON() }))
 })
 
+// @params: body { user: { email: 'example@test.se', password: 'test' }}
 router.post('/login', auth.optional, (req, res, next) => {
   const { body: { user } } = req
 

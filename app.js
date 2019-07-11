@@ -30,6 +30,7 @@ if (!isProduction) {
 // Configure Mongoose
 require('./db')
 require('./models/Users')
+require('./models/RideRequests')
 require('./config/passport')
 app.use(require('./routes'))
 
