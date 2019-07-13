@@ -31,8 +31,12 @@ if (!isProduction) {
 require('./db')
 require('./models/Users')
 require('./models/RideRequests')
+require('./models/Matches')
 require('./config/passport')
 app.use(require('./routes'))
+
+//Schedule jobs
+require('./scheduler')
 
 // Error handlers & middlewares
 if (!isProduction) {
