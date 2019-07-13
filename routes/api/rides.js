@@ -4,8 +4,10 @@ const auth = require('../auth')
 const RideRequests = mongoose.model('RideRequests')
 
 // Gets requests for user
-router.get('/', auth.required, (req, res, next) => {
-  return res.sendStatus(200)
+router.get('/', auth.required, async (req, res, next) => {
+  const { payload: { id } } = req
+  const requests = await RideRequests.find({ user: id })
+  return res.status(200).json(requests)
 })
 
 // Create ride request
