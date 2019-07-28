@@ -35,8 +35,8 @@ require('./models/Matches')
 require('./config/passport')
 app.use(require('./routes'))
 
-//Schedule jobs
-require('./scheduler')
+// Schedule jobs
+require('./lib/scheduler')
 
 // Error handlers & middlewares
 if (!isProduction) {
