@@ -47,7 +47,7 @@ router.post('/create', auth.required, async (req, res, next) => {
   console.log('item: ', extractCordinates(fromCoordinates.data[0]))
   const finalRequest = new RideRequests({ user: id, fromCoordinates: extractCordinates(fromCoordinates.data[0]), toCoordinates: extractCordinates(toCoordinates.data[0]), ...rideRequest })
   console.log(finalRequest)
-  return finalRequest.save().then(() => res.json({ finalRequest }))
+  return finalRequest.save().then((resp) => resp.json({ finalRequest }))
 })
 
 module.exports = router

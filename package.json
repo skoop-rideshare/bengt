@@ -16,6 +16,7 @@
     "express": "~4.16.1",
     "express-jwt": "^5.3.1",
     "express-session": "^1.16.2",
+    "great-circle": "^0.2.8",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
