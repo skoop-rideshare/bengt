@@ -5,7 +5,8 @@ const session = require('express-session')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const errorHandler = require('errorhandler')
-
+const dotenv = require('dotenv')
+dotenv.config()
 // Configure mongoose's promise to global promise
 mongoose.promise = global.Promise
 
@@ -27,6 +28,7 @@ if (!isProduction) {
   app.use(errorHandler())
 }
 
+console.log('Process.env', process.env)
 // Configure Mongoose
 require('./db')
 require('./models/Users')

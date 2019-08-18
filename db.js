@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const server = process.env.MONGO_URI
+const server = process.env.MONGO_URL
 
 class Database {
   constructor () {
@@ -7,8 +7,7 @@ class Database {
   }
 
   _connect () {
-    console.log(server)
-    mongoose.connect(server)
+    mongoose.connect(server, { useNewUrlParser: true })
       .then(() => {
         console.log('Database connection successful')
       })
