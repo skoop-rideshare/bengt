@@ -1,3 +1,3 @@
 // Procfile
 
-web: npm run heroku-build-start 
+web: node app.js 
