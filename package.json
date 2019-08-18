@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "heroku-build-start": "npm ci && nodemon app.js.",
     "start": "nodemon app.js",
     "test": "standard",
     "testFix": "standard --fix"
