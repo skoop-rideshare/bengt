@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon app.js",
-    "test": "standard --fix"
+    "test": "standard",
+    "testFix": "standard --fix"
   },
   "dependencies": {
     "axios": "^0.19.0",
