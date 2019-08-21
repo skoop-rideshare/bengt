@@ -10,26 +10,20 @@ router.post('/', auth.optional, async (req, res, next) => {
 
   if (!user.email) {
     return res.status(422).json({
-      errors: {
-        email: 'is required'
-      }
+      error: 'Email is required'
     })
   }
 
   if (!user.password) {
     return res.status(422).json({
-      errors: {
-        password: 'is required'
-      }
+      error: 'Password is required'
     })
   }
 
   const emailTaken = await Users.findOne({ email: user.email })
   if (emailTaken) {
     return res.status(422).json({
-      errors: {
-        email: 'is already in use'
-      }
+      error: 'Email is already in use'
     })
   }
 
@@ -47,17 +41,13 @@ router.post('/login', auth.optional, (req, res, next) => {
 
   if (!user.email) {
     return res.status(422).json({
-      errors: {
-        email: 'is required'
-      }
+      error: 'Email is required'
     })
   }
 
   if (!user.password) {
     return res.status(422).json({
-      errors: {
-        password: 'is required'
-      }
+      error: 'Password is required'
     })
   }
 
@@ -70,11 +60,7 @@ router.post('/login', auth.optional, (req, res, next) => {
       user.token = passportUser.generateJWT()
       return res.json({ user: user.toAuthJSON() })
     }
-    return res.status(400).json({
-      errors: {
-        user: 'does not exist'
-      }
-    })
+    return res.status(422).json({ error: 'User does not exist'})
   })(req, res, next)
 })
 
