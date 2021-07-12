@@ -57,7 +57,7 @@ router.post('/login', auth.optional, (req, res, next) => {
       user.token = passportUser.generateJWT()
       return res.json({ user: user.toAuthJSON() })
     }
-    return res.status(422).json({ error: 'User does not exist'})
+    return res.status(422).json({ error: 'User does not exist' })
   })(req, res, next)
 })
 

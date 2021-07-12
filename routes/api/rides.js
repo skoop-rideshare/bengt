@@ -30,8 +30,8 @@ router.post('/create', auth.required, async (req, res, next) => {
     })
   }
 
-  let toCoordinates = await getCoordinates(toAddress)
-  let fromCoordinates = await getCoordinates(fromAddress)
+  const toCoordinates = await getCoordinates(toAddress)
+  const fromCoordinates = await getCoordinates(fromAddress)
 
   if (toCoordinates === null) {
     return res.status(422).json({
@@ -44,21 +44,21 @@ router.post('/create', auth.required, async (req, res, next) => {
       fromAddress: 'coordinates not found for address'
     })
   }
-  
-  const finalRequest = new RideRequest({ 
-    user: id, 
+
+  const finalRequest = new RideRequest({
+    user: id,
     fromCoordinates: extractCordinates(fromCoordinates.data[0]),
     toCoordinates: extractCordinates(toCoordinates.data[0]),
     ...rideRequest
   })
 
-  return finalRequest.save().then(_request => res.status(200).json({message: 'Ride request created'}))
+  return finalRequest.save().then(_request => res.status(200).json({ message: 'Ride request created' }))
 })
 
 // Delete ride request
-router.post('/delete', auth.required, async(req, res, next) => {
+router.post('/delete', auth.required, async (req, res, next) => {
   const { body: { ride } } = req
-  return RideRequest.findByIdAndRemove(ride, {useFindAndModify: true}, (_) => res.status(200).json({message: 'Ride request removed'}))
+  return RideRequest.findByIdAndRemove(ride, { useFindAndModify: true }, (_) => res.status(200).json({ message: 'Ride request removed' }))
 })
 
 module.exports = router
