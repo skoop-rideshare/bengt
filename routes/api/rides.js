@@ -16,38 +16,43 @@ const extractCordinates = data => { return { lat: data.lat, lon: data.lon } }
 // Create ride request
 router.post('/create', auth.required, async (req, res, next) => {
   const { payload: { id }, body: { rideRequest } } = req
-  const { toAdress, fromAdress } = rideRequest
+  const { toAddress, fromAddress } = rideRequest
 
-  if (!fromAdress) {
+  if (!fromAddress) {
     return res.status(422).json({
-      fromAdress: 'is required'
+      fromAddress: 'is required'
     })
   }
 
-  if (!toAdress) {
+  if (!toAddress) {
     return res.status(422).json({
       toAdress: 'is required'
     })
   }
 
-  let toCoordinates = await getCoordinates(toAdress)
-  let fromCoordinates = await getCoordinates(fromAdress)
+  let toCoordinates = await getCoordinates(toAddress)
+  let fromCoordinates = await getCoordinates(fromAddress)
 
   if (toCoordinates === null) {
     return res.status(422).json({
-      toAdress: 'coordinates not found for address'
+      toAddress: 'coordinates not found for address'
     })
   }
 
   if (fromCoordinates === null) {
     return res.status(422).json({
-      fromAdress: 'coordinates not found for address'
+      fromAddress: 'coordinates not found for address'
     })
   }
-  console.log('item: ', extractCordinates(fromCoordinates.data[0]))
-  const finalRequest = new RideRequests({ user: id, fromCoordinates: extractCordinates(fromCoordinates.data[0]), toCoordinates: extractCordinates(toCoordinates.data[0]), ...rideRequest })
-  console.log(finalRequest)
-  return finalRequest.save().then((resp) => resp.json({ finalRequest }))
+  
+  const finalRequest = new RideRequests({ 
+    user: id, 
+    fromCoordinates: extractCordinates(fromCoordinates.data[0]),
+    toCoordinates: extractCordinates(toCoordinates.data[0]),
+    ...rideRequest
+  })
+
+  return finalRequest.save().then(_request => res.status(200).json({message: 'Ride request created'}))
 })
 
 module.exports = router

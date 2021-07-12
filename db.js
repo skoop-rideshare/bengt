@@ -1,5 +1,7 @@
+// Setup DB
+
 const mongoose = require('mongoose')
-const server = process.env.MONGO_URL
+const server = process.env.MONGO_URI
 
 class Database {
   constructor () {

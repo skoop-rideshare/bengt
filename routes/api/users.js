@@ -26,11 +26,8 @@ router.post('/', auth.optional, async (req, res, next) => {
       error: 'Email is already in use'
     })
   }
-
   const finalUser = new Users(user)
-
   finalUser.setPassword(user.password)
-
   return finalUser.save()
     .then(() => res.json({ user: finalUser.toAuthJSON() }))
 })
