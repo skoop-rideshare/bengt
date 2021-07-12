@@ -55,4 +55,10 @@ router.post('/create', auth.required, async (req, res, next) => {
   return finalRequest.save().then(_request => res.status(200).json({message: 'Ride request created'}))
 })
 
+// Delete ride request
+router.post('/delete', auth.required, async(req, res, next) => {
+  const { body: { ride } } = req
+  return RideRequest.findByIdAndRemove(ride, {useFindAndModify: true}, (_) => res.status(200).json({message: 'Ride request removed'}))
+})
+
 module.exports = router
