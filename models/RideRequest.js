@@ -8,7 +8,7 @@ const RideRequestSchema = new Schema({
   fromCoordinates: { lat: String, lon: String },
   toCoordinates: { lat: String, lon: String },
   driver: { type: Boolean, default: false },
-  user: { type: Schema.Types.ObjectId, ref: 'Users' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 })
 
 mongoose.model('RideRequest', RideRequestSchema)
