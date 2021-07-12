@@ -14,9 +14,9 @@ mongoose.promise = global.Promise
 const isProduction = process.env.NODE_ENV === 'production'
 
 require('./db')
-require('./models/Users')
-require('./models/RideRequests')
-require('./models/Matches')
+require('./models/User')
+require('./models/RideRequest')
+require('./models/RideMatch')
 require('./config/passport')
 
 // Initiate our app

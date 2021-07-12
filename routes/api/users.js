@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const router = require('express').Router()
 const auth = require('../auth')
-const Users = mongoose.model('Users')
+const User = mongoose.model('User')
 
 // @params: body { user: { email: 'example@test.se', password: 'test' }}
 router.post('/', auth.optional, async (req, res, next) => {
@@ -20,13 +20,13 @@ router.post('/', auth.optional, async (req, res, next) => {
     })
   }
 
-  const emailTaken = await Users.findOne({ email: user.email })
+  const emailTaken = await User.findOne({ email: user.email })
   if (emailTaken) {
     return res.status(422).json({
       error: 'Email is already in use'
     })
   }
-  const finalUser = new Users(user)
+  const finalUser = new User(user)
   finalUser.setPassword(user.password)
   return finalUser.save()
     .then(() => res.json({ user: finalUser.toAuthJSON() }))
@@ -64,7 +64,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 router.get('/current', auth.required, (req, res, next) => {
   const { payload: { id } } = req
 
-  return Users.findById(id)
+  return User.findById(id)
     .then((user) => {
       if (!user) {
         return res.sendStatus(400)

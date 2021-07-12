@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const RideRequestSchema = new Schema({
-  fromAdress: String,
+  fromAddress: String,
+  toAddress: String,
   fromCoordinates: { lat: String, lon: String },
-  toAdress: String,
   toCoordinates: { lat: String, lon: String },
-  driver: Boolean,
+  hasCar: Boolean,
   user: { type: Schema.Types.ObjectId, ref: 'Users' }
 })
 
-mongoose.model('RideRequests', RideRequestSchema)
+mongoose.model('RideRequest', RideRequestSchema)

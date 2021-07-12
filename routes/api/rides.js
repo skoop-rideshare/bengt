@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const router = require('express').Router()
 const auth = require('../auth')
-const RideRequests = mongoose.model('RideRequests')
+const RideRequest = mongoose.model('RideRequest')
 const getCoordinates = require('../../lib/geocoder')
 
 // Gets requests for user
 router.get('/', auth.required, async (req, res, next) => {
   const { payload: { id } } = req
-  const requests = await RideRequests.find({ user: id })
+  const requests = await RideRequest.find({ user: id })
   return res.status(200).json(requests)
 })
 
@@ -45,7 +45,7 @@ router.post('/create', auth.required, async (req, res, next) => {
     })
   }
   
-  const finalRequest = new RideRequests({ 
+  const finalRequest = new RideRequest({ 
     user: id, 
     fromCoordinates: extractCordinates(fromCoordinates.data[0]),
     toCoordinates: extractCordinates(toCoordinates.data[0]),
