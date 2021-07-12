@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const errorHandler = require('errorhandler')
 const dotenv = require('dotenv')
 dotenv.config()
 // Configure mongoose's promise to global promise
@@ -29,32 +28,18 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }))
 
-routes = require('./routes')
-
-app.use('/', routes)
+app.use('/', require('./routes'))
 
 // // Schedule jobs
 require('./lib/scheduler')
 
-// Error handlers & middlewares
-if (!isProduction) {
-  app.use((err, req, res, next) => {
-    res.status(err.status || 500)
-    res.json({
-      errors: {
-        message: err.message,
-        error: err
-      }
-    })
-  })
-}
-
-app.use((err, req, res, next) => {
-  res.status(err.status || 500)
+app.use((error, _req, res, _next) => {
+  res.status(error.status || 500)
+  console.log(error)
   res.json({
     errors: {
-      message: err.message,
-      error: {}
+      message: error.message,
+      error: isProduction ? error : {}
     }
   })
 })

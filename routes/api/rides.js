@@ -5,7 +5,7 @@ const RideRequest = mongoose.model('RideRequest')
 const getCoordinates = require('../../lib/geocoder')
 
 // Gets requests for user
-router.get('/', auth.required, async (req, res, next) => {
+router.get('/', auth.required, async (req, res) => {
   const { payload: { id } } = req
   const requests = await RideRequest.find({ user: id })
   return res.status(200).json(requests)
@@ -14,7 +14,7 @@ router.get('/', auth.required, async (req, res, next) => {
 const extractCordinates = data => { return { lat: data.lat, lon: data.lon } }
 
 // Create ride request
-router.post('/create', auth.required, async (req, res, next) => {
+router.post('/create', auth.required, async (req, res) => {
   const { payload: { id }, body: { rideRequest } } = req
   const { toAddress, fromAddress } = rideRequest
 
@@ -52,13 +52,13 @@ router.post('/create', auth.required, async (req, res, next) => {
     ...rideRequest
   })
 
-  return finalRequest.save().then(_request => res.status(200).json({ message: 'Ride request created' }))
+  finalRequest.save().then(_request => res.status(200).json(finalRequest))
 })
 
 // Delete ride request
-router.post('/delete', auth.required, async (req, res, next) => {
+router.post('/delete', auth.required, async (req, res) => {
   const { body: { ride } } = req
-  return RideRequest.findByIdAndRemove(ride, { useFindAndModify: true }, (_) => res.status(200).json({ message: 'Ride request removed' }))
+  RideRequest.findByIdAndRemove(ride, { useFindAndModify: true }, (_) => res.status(200).json({ message: 'Ride request removed' }))
 })
 
 module.exports = router

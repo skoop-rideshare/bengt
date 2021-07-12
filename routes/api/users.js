@@ -5,7 +5,7 @@ const auth = require('../auth')
 const User = mongoose.model('User')
 
 // @params: body { user: { email: 'example@test.se', password: 'test' }}
-router.post('/', auth.optional, async (req, res, next) => {
+router.post('/', auth.optional, async (req, res) => {
   const { body: { user } } = req
 
   if (!user.email) {
@@ -61,7 +61,7 @@ router.post('/login', auth.optional, (req, res, next) => {
   })(req, res, next)
 })
 
-router.get('/current', auth.required, (req, res, next) => {
+router.get('/current', auth.required, (req, res) => {
   const { payload: { id } } = req
 
   return User.findById(id)

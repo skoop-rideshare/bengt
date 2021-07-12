@@ -7,7 +7,7 @@ const RideRequestSchema = new Schema({
   toAddress: String,
   fromCoordinates: { lat: String, lon: String },
   toCoordinates: { lat: String, lon: String },
-  hasCar: Boolean,
+  driver: { type: Boolean, default: false },
   user: { type: Schema.Types.ObjectId, ref: 'Users' }
 })
 
