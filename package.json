@@ -15,7 +15,7 @@
     "debug": "~2.6.9",
     "dotenv": "^8.1.0",
     "errorhandler": "^1.5.1",
-    "express": "~4.16.1",
+    "express": "~4.18.2",
     "express-jwt": "^6.0.0",
     "express-session": "^1.16.2",
     "great-circle": "^0.2.8",
